@@ -1,0 +1,21 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "49022868-031d-475f-b7c7-aaf652a3567e",
+  "alias": "InputfieldsWebPart",
+  "componentType": "WebPart",
+  "version": "*",
+  "manifestVersion": 2,
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart","TeamsTab"],
+
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
+    "group": { "default": "Other" },
+    "title": { "default": "Inputfields" },
+    "description": { "default": "Inputfields description" },
+    "officeFabricIconFontName": "Page",
+    "properties": {
+      "description": "Inputfields"
+    }
+  }]
+}
