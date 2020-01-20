@@ -14,29 +14,66 @@ export interface IInputfieldsWebPartProps {
 }
 
 export default class InputfieldsWebPart extends BaseClientSideWebPart<IInputfieldsWebPartProps> {
-
+  public createdgroup:any;
+  public teamcreated:boolean=false;
   public render(): void {
-    this.domElement.innerHTML = `
-      <div class="${styles.inputfields}">
+    if(!this.createdgroup){
+    this.domElement.innerHTML = 
+    `<div class="${styles.inputfields}">
         <div class="${styles.container}">
           <div class="${styles.row}">
             <div class="${styles.column}">
               <span class="${styles.title}">Welcome to Sample Demo SharePoint APP!</span> <br><br>
-            <form action="#">
                 <label for="input1">Team Name :</label>
-                <input class="${styles.input1}" type="text" placeholder="Team Name">
+                <input class="${styles.input1}" type="text" name="teamname" id="teamname"  placeholder="Team Name">
                 <label for="input2">Channel Name :</label>
-                <div class="${styles.tip}" data-tip="Add multiple channels">
-                  <input class="${styles.input2}" type="text" placeholder="Channel Name"/>
+                <div class="${styles.tip}"  data-tip="Add multiple channels comma saperatedly">
+                  <input class="${styles.input2}" id="channelname" type="text" name="channelname" placeholder="Channel Name"/>
                 </div>
                 <br><br><br>
-                <input class="${styles.submit}" type="submit" value="Submit">
-            </form>
+                <input class="${styles.submit}" id="submitbtn"  type="submit" value="Submit">
           </div>
         </div>
       </div>`;
+      document.getElementById('submitbtn').addEventListener('click', () => this.handleSubmit());
+    }
+      
   }
+  
+  public handleSubmit(){
+   var team:any=document.getElementById('teamname');
+   var channels:any=document.getElementById('channelname');
+    fetch('https://localhost:44379/api/Team/Create?TeamName='+team.value+'&Channels='+channels.value).then(r => r.json()).then(res=>
+    {
+      this.createdgroup=res;
+      this.domElement.innerHTML=`
+      <div class="${styles.inputfields}">
+        <div class="${styles.container}">
+          <div class="${styles.row}">
+            <div class="${styles.column}">
+            <label>Team Name :</label>
+              <span class="${styles.title}">${this.createdgroup.displayName}</span> <br><br>
+              <div>
+              <input class="${styles.input3}" id="members" type="text" name="members" placeholder="Group Members"/>
+             </div>
+            
+            <input class="${styles.submit}" id="addmembers"  type="submit" value="Add">
+          </div>
+        </div>
+      </div>`
+      document.getElementById('addmembers').addEventListener('click', () => this.addMember());
+    });
 
+  }
+ 
+  public addMember(){
+    var members:any=document.getElementById('members');
+    fetch('https://localhost:44379/api/Team/AddMember?EmailId='+members.value+'&groupid='+this.createdgroup.id).then(r => r.json()).then(res=>
+    {
+    console.log(res);
+    alert("user added");
+    })
+  }
   protected get dataVersion(): Version {
     return Version.parse('1.0');
   }
