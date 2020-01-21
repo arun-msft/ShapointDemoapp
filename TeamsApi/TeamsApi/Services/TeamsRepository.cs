@@ -41,10 +41,6 @@ namespace TeamsApi.Repository
             String userId = "";
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            if (accessToken == null)
-            {
-                accessToken=await _authProvider.GetAccessTokenAsync();
-            }
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             var response = await httpClient.GetAsync(endpoint+queryParameter);
@@ -74,10 +70,6 @@ namespace TeamsApi.Repository
                 body.securityEnabled = false;
                 string me = await GetMyId(_ownerId);
                 string payload = $"{{ 'owners@odata.bind': '{_graphUrl}users/{me}' }}";
-                if (accessToken == null)
-                {
-                    accessToken=await _authProvider.GetAccessTokenAsync();
-                }
                 HttpClient httpClient = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Post, createGroupurl);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -105,6 +97,7 @@ namespace TeamsApi.Repository
         {
             try
             {
+                accessToken = await _authProvider.GetAccessTokenAsync();
                 Group createdGroup = await CreateGroup<Group>(TeamName);
                 await AddOwner(createdGroup.id);
                 string createTeamUrl = _graphUrl+ "groups/"+ createdGroup.id + "/team";
@@ -126,10 +119,6 @@ namespace TeamsApi.Repository
                 string me = await GetMyId(_ownerId);
                 string templatepayload = $"{{ 'template@odata.bind': '{_graphUrl}teamsTemplates('healthcareHospital')' }}";
                 string userpayload = $"{{ 'owners@odata.bind': '{_graphUrl}users/{me}' }}";
-                if (accessToken == null)
-                {
-                    accessToken=await _authProvider.GetAccessTokenAsync();
-                }
                 HttpClient httpClient = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Put, createTeamUrl);
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -197,10 +186,6 @@ namespace TeamsApi.Repository
             }
             string addownerurl = _graphUrl + "groups/" + groupid + "/members/$ref";
             string userpayload = $"{{ '@odata.id': '{_graphUrl}directoryObjects/{me}' }}";
-            if (accessToken == null)
-            {
-                accessToken = await _authProvider.GetAccessTokenAsync();
-            }
             HttpClient httpClient = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, addownerurl);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -221,10 +206,6 @@ namespace TeamsApi.Repository
             userpayload["invitedUserEmailAddress"] = EmailId;
             userpayload["inviteRedirectUrl"] = "https://teams.microsoft.com";
             userpayload["sendInvitationMessage"] = true;
-            if (accessToken == null)
-            {
-                accessToken=await _authProvider.GetAccessTokenAsync();
-            }
             HttpClient httpClient = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, addownerurl);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
