@@ -11,6 +11,7 @@
   .row {
     @include ms-Grid-row;
     // background-color: $ms-color-themeDark;
+    background-color: #3d314e;
     padding: 20px;
   }
 
@@ -24,7 +25,7 @@
 
   .title {
     @include ms-font-xl;
-    color: black;
+    @include ms-fontColor-white;
     font-size: larger;
     font-weight: 700;
   }
@@ -41,35 +42,37 @@
 
   label {
     display: inline-block;
-    color: black;
+    @include ms-fontColor-white;
   }
   input {
-    display: inline-flex;
     padding: 8px;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-  .input1 {
-    width: 20%;
-  }
-  .input2 {
-    width: 30%;
+    display: block;
+    border: none;
+    border-bottom: 1px solid rgb(98, 95, 233);
+    width: 100%;
+    text-rendering: auto;
+    color: -internal-light-dark-color(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: start;
+    background-color: -internal-light-dark-color(white, black);
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    background-color: lightcyan;
   }
   .input3{
     width:50%;
   }
   .submit {
-    float: right;
-    background-color: purple;
+    background-color: #aa4238;
+    border-bottom: 1px solid #ccc !important;
+    text-align: center;
     color: white;
     cursor: pointer;
+    width: 105%;
   }
   .tip {
     display: inline;
@@ -82,10 +85,11 @@
     content: "";
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid #1a1a1a;
+    border-bottom: 5px solid lightblue;
     position: absolute;
-    top: 36px;
-    left: 35px;
+    top: 166px;
+    // left: 35px;
+    right: 47%;
     z-index: 8;
     font-size: 0;
     line-height: 0;
@@ -97,11 +101,11 @@
     display: none;
     content: attr(data-tip);
     position: absolute;
-    top: 7px;
-    left: 0px;
+    top: 72%;
+    right: 26%;
     border: 1px solid lightcyan;
     padding: 5px 8px;
-    color: black;
+    @include ms-fontColor-white;
     z-index: 9;
     font-size: 1em;
     height: 18px;
@@ -119,13 +123,12 @@
   }
 
   @media (max-width: 426px) {
-    .input1,
-    .input2 {
-      width: 100% !important;
-    }
     [data-tip]:hover:before,
-  [data-tip]:hover:after {
-    display: none;
+    [data-tip]:hover:after {
+      display: none;
+    }
+    .submit {
+    width: 107%;
   }
   }
 }
