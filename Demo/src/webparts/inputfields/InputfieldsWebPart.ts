@@ -23,13 +23,13 @@ export default class InputfieldsWebPart extends BaseClientSideWebPart<IInputfiel
             <div class="${styles.column}">
               <span class="${styles.title}">Welcome to Sample Demo SharePoint APP!</span> <br><br>
             <form action="#">
-                <label for="input1">Team Name :</label>
-                <input class="${styles.input1}" type="text" placeholder="Team Name">
-                <label for="input2">Channel Name :</label>
+                <label for="input1">Team Name</label>
+                <input type="text" placeholder="Team Name"> <br />
+                <label for="input2">Channel Name</label>
                 <div class="${styles.tip}" data-tip="Add multiple channels">
-                  <input class="${styles.input2}" type="text" placeholder="Channel Name"/>
+                  <input type="text" placeholder="Channel Name"/>
                 </div>
-                <br><br><br>
+                <br><br>
                 <input class="${styles.submit}" type="submit" value="Submit">
             </form>
           </div>
